@@ -1,0 +1,9 @@
+name: "Master Thesis - Animacy"
+output_dir: "."
+navbar:
+  title: "Master Thesis - Animacy"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Data Analysis"
+      href: data_analysis.html

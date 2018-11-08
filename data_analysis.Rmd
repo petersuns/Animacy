@@ -1,0 +1,51 @@
+---
+title: "Data Analysis"
+output:
+  #pdf_document: default
+  html_document:
+    # keep_md: true
+    code_folding: hide
+    # df_print: paged
+    # fontsize: 20pt
+auther: Shuo Sun
+---
+
+
+
+```{r}
+library(ggrepel)
+library(ggplot2)
+library(plotly)
+library(reshape2)
+library(pheatmap)
+library(corrplot)
+library(dplyr)
+library(data.table)
+library(uwot)
+setwd("~/Google Drive (petersun)/Master Thesis/research data for thesis analysis/data from both rooms")
+task4 = list.files(pattern="face similarity")
+task5 = list.files(pattern="body similarity")
+task6 = list.files(pattern="human similarity")
+task7 = list.files(pattern="animacy similarity")
+
+face_names<-read.csv("naming face - naming face.csv",stringsAsFactors = FALSE)
+rank_task6<-read.csv("rank_task6.csv",stringsAsFactors = FALSE)
+face_names<-face_names[1:24,]
+face_names<-arrange(face_names,label_english)
+row.names(face_names) <- face_names$label_english
+
+# 3D
+a <- umap(rank_task6,n_components=3)
+
+# packageVersion('plotly')
+p <- plot_ly(data.frame(a), x = ~X1, y = ~X2, z = ~X3, width=1000, height=800,color =face_names$aggressiveness,text=face_names$label_english) %>%
+  add_markers() %>%
+  add_text(textfont = t, textposition = "top right") %>%
+  layout(scene = list(xaxis = list(title = '1'),
+                      yaxis = list(title = '2'),
+                      zaxis = list(title = '3')))
+p
+```
+
+
+
